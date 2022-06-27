@@ -13,7 +13,7 @@ func SendMailVerivication(toEmailAddress string, userId primitive.ObjectID) erro
 	msg.SetHeader("To", toEmailAddress)
 	msg.SetHeader("Subject", "Email Verifications")
 	userIdString := userId.Hex()
-	msg.SetBody("text/html", "Klik Link Berikut Untuk Verifikasi: go-fellas.herokuapp.com/users/verify/" + userIdString)
+	msg.SetBody("text/html", "Buka Link Berikut Untuk Verifikasi: go-fellas.herokuapp.com/users/auth/verify/" + userIdString)
 
 	n := gomail.NewDialer("smtp.gmail.com", 587, "imamrizaldi00@gmail.com", "kahthvprcnhzkowh")
 

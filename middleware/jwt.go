@@ -44,7 +44,7 @@ func Auth(next http.Handler) http.Handler {
 			if t.Method != jwt.GetSigningMethod("HS256") {
 				return nil, errors.New("unexpected signing method")
 			}
-			return []byte("SECRET_KEY"), nil
+			return []byte(os.Getenv("SECRET_KEY")), nil
 		})
 		if token != nil && err == nil {
 			myToken := token.Claims.(jwt.MapClaims)["userId"]
