@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -13,9 +12,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+var secret_key = "secret-key"
+
 func GenerateToken(userId primitive.ObjectID) (string, error) {
-	err := godotenv.Load()
-	helper.PanicIfError(err)
 
 	sign := jwt.New(jwt.GetSigningMethod("HS256"))
 
@@ -25,7 +24,7 @@ func GenerateToken(userId primitive.ObjectID) (string, error) {
 	claims["userId"] = userId
 	claims["exp"] = time.Now().Add(60 * time.Minute).Unix()
 
-	token, err := sign.SignedString([]byte(os.Getenv("SECRET_KEY")))
+	token, err := sign.SignedString([]byte(secret_key))
 	if err != nil {
 		return "", errors.New("could not generate token")
 	}
@@ -43,7 +42,7 @@ func Auth(next http.Handler) http.Handler {
 			if t.Method != jwt.GetSigningMethod("HS256") {
 				return nil, errors.New("unexpected signing method")
 			}
-			return []byte(os.Getenv("SECRET_KEY")), nil
+			return []byte(secret_key), nil
 		})
 		if token != nil && err == nil {
 			myToken := token.Claims.(jwt.MapClaims)["userId"]

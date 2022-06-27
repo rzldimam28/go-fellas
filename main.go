@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/rzldimam28/wlb-test/config"
@@ -58,5 +57,5 @@ func main() {
 	userRouter.HandleFunc("/{userId}", userController.Delete).Methods("DELETE") 
 
 	fmt.Println("Server is running on port 8080...")
-	log.Fatal(http.ListenAndServe("localhost:"+os.Getenv("PORT"), r))
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
