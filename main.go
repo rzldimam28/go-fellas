@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"github.com/rzldimam28/wlb-test/config"
 	blogcontroller "github.com/rzldimam28/wlb-test/controller/blog-contoller"
 	usercontroller "github.com/rzldimam28/wlb-test/controller/user-controller"
 	"github.com/rzldimam28/wlb-test/middleware"
+	"github.com/rzldimam28/wlb-test/model/helper"
 	blogrepository "github.com/rzldimam28/wlb-test/repository/blog-repository"
 	commentrepository "github.com/rzldimam28/wlb-test/repository/comment-repository"
 	userrepository "github.com/rzldimam28/wlb-test/repository/user-repository"
@@ -18,6 +21,9 @@ import (
 )
 
 func main() {
+	err := godotenv.Load()
+	helper.PanicIfError(err)
+
 	fmt.Println("WLB Test")
 
 	db := config.InitDatabase()
@@ -57,5 +63,5 @@ func main() {
 	userRouter.HandleFunc("/{userId}", userController.Delete).Methods("DELETE") 
 
 	fmt.Println("Server is running on port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), r))
 }
