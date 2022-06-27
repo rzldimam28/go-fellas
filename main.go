@@ -54,11 +54,11 @@ func main() {
 
 	// user
 	userRouter := r.PathPrefix("/users").Subrouter()
-	userRouter.HandleFunc("/login", userController.Login).Methods("GET")
-	userRouter.HandleFunc("/verify/{userId}", userController.Verify).Methods("PUT")
+	userRouter.HandleFunc("/auth/login", userController.Login).Methods("GET")
+	userRouter.HandleFunc("/auth/verify/{userId}", userController.Verify).Methods("PUT")
 	userRouter.HandleFunc("", userController.FindAll).Methods("GET")
 	userRouter.HandleFunc("/{userId}", userController.FindById).Methods("GET")
-	userRouter.HandleFunc("", userController.Create).Methods("POST")
+	userRouter.HandleFunc("/register", userController.Create).Methods("POST")
 	userRouter.HandleFunc("/{userId}", userController.Update).Methods("PUT")
 	userRouter.HandleFunc("/{userId}", userController.Delete).Methods("DELETE") 
 
