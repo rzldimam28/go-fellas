@@ -1,1 +1,1 @@
-web: bin/wlb-test
+web: wlb-test
