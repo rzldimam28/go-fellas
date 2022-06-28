@@ -50,11 +50,14 @@ func (userService *UserServiceImpl) FindById(ctx context.Context, userId primiti
 }
 
 func (userService *UserServiceImpl) FindByUsername(ctx context.Context, username string) response.UserResponse {
-	user := userService.UserRepository.FindByUsername(ctx, username)
+	user, err := userService.UserRepository.FindByUsername(ctx, username)
+	helper.PanicIfError(err)
+
 	userResponse := response.UserResponse{
 		Id: user.Id,
 		Username: user.Username,
 		Email: user.Email,
+		Password: user.Password,
 		Status: user.Status,
 	}
 	return userResponse

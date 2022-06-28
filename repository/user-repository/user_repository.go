@@ -10,7 +10,7 @@ import (
 type UserRepository interface {
 	FindAll(ctx context.Context) []entity.Users
 	FindById(ctx context.Context, userId primitive.ObjectID) (entity.Users, error)
-	FindByUsername(ctx context.Context, username string) entity.Users
+	FindByUsername(ctx context.Context, username string) (entity.Users, error)
 	Create(ctx context.Context, user entity.Users) entity.Users
 	Update(ctx context.Context, user entity.Users) entity.Users
 	Verify(ctx context.Context, user entity.Users) entity.Users

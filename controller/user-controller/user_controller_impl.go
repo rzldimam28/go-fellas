@@ -83,7 +83,10 @@ func (userController *UserControllerImpl) Login(w http.ResponseWriter, r *http.R
 	helper.ReadFromRequestBody(r, &u)	
 
 	userResponse := userController.UserService.FindByUsername(r.Context(), u.Username)
-	if u.Username != userResponse.Username {
+
+	matchPassword := helper.CheckPassword(u.Password, userResponse.Password)
+	
+	if u.Username != userResponse.Username || !matchPassword {
 		webResponse := helper.CreateWebResponse(http.StatusUnauthorized, "Unauthorized", nil)
 		helper.WriteToResponseBody(w, webResponse)
 		return

@@ -49,14 +49,16 @@ func (userRepository *UserRepositoryImpl) FindById(ctx context.Context, userId p
 	return user, nil
 }
 
-func (userRepository *UserRepositoryImpl) FindByUsername(ctx context.Context, username string) entity.Users {
+func (userRepository *UserRepositoryImpl) FindByUsername(ctx context.Context, username string) (entity.Users, error) {
 	userToFind := bson.D{{Key: "username", Value: username}}
 	cur := userRepository.DB.Collection("users").FindOne(ctx, userToFind)
 	
 	var user entity.Users
 	err := cur.Decode(&user)
-	helper.PanicIfError(err)
-	return user
+	if err != nil {
+		return user, errors.New("can not find user by username")
+	}
+	return user, nil
 }
 
 func (userRepository *UserRepositoryImpl) Create(ctx context.Context, user entity.Users) entity.Users {
