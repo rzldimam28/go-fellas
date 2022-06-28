@@ -24,7 +24,7 @@ func GenerateToken(userId primitive.ObjectID) (string, error) {
 
 	claims["authorized"] = true
 	claims["userId"] = userId
-	claims["exp"] = time.Now().Add(60 * time.Minute).Unix()
+	claims["exp"] = time.Now().Add(10 * time.Minute).Unix()
 
 	token, err := sign.SignedString([]byte(os.Getenv("SECRET_KEY")))
 	if err != nil {
