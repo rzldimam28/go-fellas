@@ -62,6 +62,9 @@ func main() {
 	userRouter.HandleFunc("/{userId}", userController.Update).Methods("PUT")
 	userRouter.HandleFunc("/{userId}", userController.Delete).Methods("DELETE") 
 
+	// loging error
+	r.Use(middleware.PanicRecovery)
+
 	fmt.Println("Server is running on port 8080...")
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), r))
 }
