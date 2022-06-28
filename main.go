@@ -42,7 +42,7 @@ func main() {
 	r := mux.NewRouter()
 
 	// blog
-	blogRouter := r.PathPrefix("/blogs").Subrouter()
+	blogRouter := r.PathPrefix("/api/blogs").Subrouter()
 	blogRouter.HandleFunc("", blogController.FindAll).Methods("GET")
 	blogRouter.HandleFunc("/{blogId}", blogController.FindById).Methods("GET")
 	blogRouter.HandleFunc("", blogController.Create).Methods("POST")
@@ -53,7 +53,7 @@ func main() {
 	blogRouter.Use(middleware.Auth)
 
 	// user
-	userRouter := r.PathPrefix("/users").Subrouter()
+	userRouter := r.PathPrefix("/api/users").Subrouter()
 	userRouter.HandleFunc("/auth/login", userController.Login).Methods("GET")
 	userRouter.HandleFunc("/auth/verify/{userId}", userController.Verify).Methods("PUT")
 	userRouter.HandleFunc("", userController.FindAll).Methods("GET")

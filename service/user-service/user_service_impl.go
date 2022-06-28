@@ -84,10 +84,12 @@ func (userService *UserServiceImpl) Update(ctx context.Context, request request.
 	userToUpdate, err := userService.UserRepository.FindById(ctx, request.Id)
 	helper.PanicIfError(err)
 
+	passwordHash, err := helper.HashPassword(request.Password)
+	helper.PanicIfError(err)
+
 	userToUpdate.Username = request.Username
 	userToUpdate.Email = request.Email
-	userToUpdate.Password = request.Password
-	userToUpdate.Status = request.Status
+	userToUpdate.Password = passwordHash
 
 	updatedUser := userService.UserRepository.Update(ctx, userToUpdate)
 	userResponse := response.UserResponse{
@@ -96,6 +98,7 @@ func (userService *UserServiceImpl) Update(ctx context.Context, request request.
 		Email: updatedUser.Email,
 		Status: updatedUser.Status,
 	}
+
 	return userResponse
 }
 

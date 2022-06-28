@@ -11,7 +11,7 @@ type BlogResponse struct {
 	Title   string             `json:"title,omitempty" bson:"title,omitempty"`
 	Content string             `json:"content,omitempty" bson:"content,omitempty"`
 	Comments *[]entity.Comments `json:"comments,omitempty" bson:"comments,omitempty"`
-	IsCom bool `json:"is_com,omitempty" bson:"is_com,omitempty"`
-	LikedBy []primitive.ObjectID `json:"liked_by,omitempty" bson:"liked_by,omitempty"`
-	LikedCount int `json:"liked_count,omitempty" bson:"liked_count,omitempty"`
+	IsCom bool `json:"is_com" bson:"is_com"`
+	LikedBy []primitive.ObjectID `json:"liked_by" bson:"liked_by"`
+	LikedCount int `json:"liked_count" bson:"liked_count"`
 }

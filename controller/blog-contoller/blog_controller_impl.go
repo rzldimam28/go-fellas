@@ -23,7 +23,7 @@ func (blogController *BlogControllerImpl) FindAll(w http.ResponseWriter, r *http
 
 	title := r.URL.Query().Get("title")
 	orderBy := r.URL.Query().Get("order_by")
-	asc := r.URL.Query().Get("descending")
+	asc := r.URL.Query().Get("ascending")
 
 	if title != "" {
 		blogs := blogController.BlogService.FindByTitle(r.Context(), title, orderBy, asc)

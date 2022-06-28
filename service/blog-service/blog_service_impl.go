@@ -72,6 +72,8 @@ func (blogService *BlogServiceImpl) Create(ctx context.Context, request request.
 		Title: request.Title,
 		Content: request.Content,
 		IsCom: request.IsCom,
+		LikedBy: []primitive.ObjectID{},
+		LikedCount: 0,
 	}
 	blog := blogService.BlogRepository.Create(ctx, blogToCreate)
 	blogResponse := response.BlogResponse{
@@ -198,7 +200,7 @@ func (blogService *BlogServiceImpl) Like(ctx context.Context, blogId primitive.O
 func (blogService *BlogServiceImpl) FindByTitle(ctx context.Context, title string, orderBy string, order string) []response.BlogResponse {
 	
 	var orderInt int
-	if order == "" || order == "false" {
+	if order == "" || order == "true" {
 		orderInt = 1
 	} else {
 		orderInt = -1

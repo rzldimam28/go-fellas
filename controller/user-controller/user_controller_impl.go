@@ -50,7 +50,7 @@ func (userController *UserControllerImpl) Create(w http.ResponseWriter, r *http.
 		}
 	}
 	
-	webResponse := helper.CreateWebResponse(http.StatusCreated, "Success Create New User", userResp)
+	webResponse := helper.CreateWebResponse(http.StatusCreated, "Success Create New User. Please Verify your Email.", userResp)
 	helper.WriteToResponseBody(w, webResponse)
 }
 
@@ -101,7 +101,7 @@ func (userController *UserControllerImpl) Login(w http.ResponseWriter, r *http.R
 		helper.WriteToResponseBody(w, webResponse)
 		return
 	}
-	webResponse := helper.CreateWebResponse(http.StatusOK, "Success generate token", token)
+	webResponse := helper.CreateWebResponse(http.StatusOK, "Login Success. Please Use the Following Token.", token)
 	helper.WriteToResponseBody(w, webResponse)
 }
 
